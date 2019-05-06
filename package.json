@@ -1,0 +1,15 @@
+{
+  "name": "hackathon-9-mei",
+  "license": "GPL-2.0+",
+  "description": "Practise/excercise files for the Hackathon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moorscode/hackathon-9-mei.git"
+  },
+  "scripts": {
+    "build": "grunt"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.4"
+  }
+}
