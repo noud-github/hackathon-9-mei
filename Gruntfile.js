@@ -57,10 +57,26 @@ module.exports = function(grunt) {
       my_target: {
         files: [{
           expand: true,
-          cwd: 'source-files/js',
+          cwd: 'tmp',
           src: '*.js',
           dest: 'artifacts/assets/js'
         }]
+      }
+    },
+    clean: {
+      before: ['dist','artifacts','tmp'],
+      after: ['artifacts','tmp']
+    },
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ['@babel/preset-env']
+      },
+      dist: {
+        files: {
+          'tmp/script.js': 'source-files/js/script.js',
+          'tmp/conditional-script.js': 'source-files/js/conditional-script.js',
+        }
       }
     }
   });
@@ -70,7 +86,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-babel');
   // Define aliases here.
-  grunt.registerTask('default', 'My default task description', ['sass', 'copy', 'zip']);
-  grunt.registerTask('artifact', 'My default task description', ['sass', 'copy', 'uglify','zip']);
+  grunt.registerTask('default', 'My default task description', ['sass', 'copy']);
+  grunt.registerTask('artifact', 'My default task description', ['clean:before','sass', 'copy', 'babel','uglify','zip','clean:after']);
 };

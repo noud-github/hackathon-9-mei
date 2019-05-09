@@ -6,5 +6,5 @@ yarn.lock
 yarn-error.log
 
 dist
-assets
 artifacts
+tmp
