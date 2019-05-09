@@ -4,3 +4,7 @@ node_modules
 # Yarn
 yarn.lock
 yarn-error.log
+
+dist
+artifacts
+tmp
