@@ -78,6 +78,19 @@ module.exports = function(grunt) {
           'tmp/conditional-script.js': 'source-files/js/conditional-script.js',
         }
       }
+    },
+    'regex-replace': {
+      updateVersion: {
+        src: ['artifacts/index.php'],
+        actions: [
+          {
+            search: new RegExp( /( \* Version:\W+)\d+.\d+.\d+/i ),
+            replace: function( match, group1 ) {
+              return group1 + grunt.config('version');
+            },
+          },
+        ],
+      },
     }
   });
 
@@ -88,7 +101,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-babel');
+  grunt.loadNpmTasks('grunt-regex-replace');
   // Define aliases here.
   grunt.registerTask('default', 'My default task description', ['sass', 'copy']);
   grunt.registerTask('artifact', 'My default task description', ['clean:before','sass', 'copy', 'babel','uglify','zip','clean:after']);
+  grunt.registerTask('update-version', function(version) {
+    grunt.config('version', version);
+    if (!version.match(/\d+.\d+.\d+/)) {
+      console.error('Version should match x.x.x');
+      return;
+    }
+    grunt.task.run('copy');
+    grunt.task.run('regex-replace');
+  });
 };
