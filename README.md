@@ -1,29 +1,21 @@
-# Task 2
+# Task 3
 
 ## End result
 
-Run `grunt artifact` to create a zip containing the following structure:
+Run `grunt update-version 1.0.1` to update the version in all relevant files.
 
-* assets
-  * classes
-    * class.php
-    * interface.php
-  * css
-    * vendor
-      * dependency.css
-    * conditional-style.css (CSS not SASS)
-    * style.css (CSS not SASS)
-  * js
-    * vendor
-      * jquery.js (not minified twice)
-      * mootools.js (not minified twice)
-    * conditional-script.js
-    * script.js
-* index.php
+Run `grunt licensed-artifact` to build an artifact containing a license key that can be validated using the `license-keys.json` file.
 
 ## Tasks
 
-- Copy multiple files at once
-- Minify only the JavaScript files that require this
-- Convert SASS to CSS only for files that require this
-- Create an alias which combines multiple tasks
+- Create a. `update-version` command that updates the version to it's first argument in the following files:
+  - `source-files/index.php`
+  - `source-files/classes/class.php`
+  - `source-files/js/script.js`
+- Create a `licensed-artifact` command that
+  - generates a random 64 character string to serve as a license key.
+  - replaces `"SUPER_SECRET_KEY_HERE"` in `source-files/classes/class.php` with that key.
+  - builds a full artifact as performed in task 2.
+  - resets the license key to `"SUPER_SECRET_KEY_HERE"` in the source code.
+  - updates or creates a `license-keys.json` file that contains an array of license keys.
+    - if the file already exists new keys should be appended to it.

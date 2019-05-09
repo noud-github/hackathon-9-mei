@@ -1,3 +1,6 @@
+// Set the version so other plugins may detect it.
+window.plugin.version = "1.0.0";
+
 /**
  * Capitalize the first letter of a string.
  *
