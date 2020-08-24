@@ -4,6 +4,8 @@ pipeline {
         stage('build') {
             steps {
                 sh 'php --version'
+		sh 'pwd'
+		sh 'ls -al config/jenkins/'
 		sh 'config/jenkins/test.cmd'
             }
         }
