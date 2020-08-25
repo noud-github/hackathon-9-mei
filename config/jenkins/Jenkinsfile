@@ -2,14 +2,16 @@ pipeline {
     agent { docker { image 'Ubuntu' } }
     stages {
         stage('build') {
-			sshagent (credentials: ['Jenkins-CI']) {
+			
             steps {
+				sshagent (credentials: ['Jenkins-CI']) {
 				sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
-                sh 'php --version'
+				}
+				sh 'php --version'
 				sh 'pwd'
 				sh 'ls -al config/jenkins/'
 				sh 'config/jenkins/test.cmd'
-            }}
+            }
         }
     }
 }
