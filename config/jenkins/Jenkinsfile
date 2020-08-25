@@ -1,13 +1,13 @@
 pipeline {
-    agent { docker { image 'ubuntu' } }
+    agent { docker { image 'node:12-alpine' } }
     stages {
         stage('build') {
 			steps {
 				sh 'pwd'
 				sh 'ls -al config/jenkins/'
-				
-				sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
-				
+				sshagent (credentials: ['Jenkins-CI']) {
+					sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
+				}
 				
 				sh 'config/jenkins/test.cmd'
             }
