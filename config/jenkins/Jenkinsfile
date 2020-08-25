@@ -2,11 +2,7 @@ pipeline {
     agent { docker { image 'ubuntu' } }
     stages {
         stage('build') {
-			
-            steps {
-				sshagent (credentials: ['Jenkins-CI']) {
-				sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
-				}
+			steps {
 				sh 'php --version'
 				sh 'pwd'
 				sh 'ls -al config/jenkins/'
