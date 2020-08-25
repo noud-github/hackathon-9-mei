@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
 			steps {
-				sh 'apt-get update && apt-get upgrade && apt-get install openssh-client --yes'
+				sh 'apt-get update && apt-get install openssh-client --yes'
 				sh 'pwd'
 				sh 'ls -al config/jenkins/'
 				sh 'ssh-agent -s'
