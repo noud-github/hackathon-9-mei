@@ -6,9 +6,10 @@ pipeline {
 				sh 'apt-get update && apt-get install openssh-client --yes'
 				sh 'pwd'
 				sh 'ls -al config/jenkins/'
-				sh 'ssh-agent -s'
+				sh 'ssh-add -l'
+				sh 'sleep 100 '
 				catchError {
-					sshAgent ('Jenkins-CI') {
+					sshagent ('Jenkins-CI') {
 						sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
 					}
                 
