@@ -3,11 +3,12 @@ pipeline {
     stages {
         stage('build') {
 			steps {
+				sh 'pwd'
+				sh 'ls -al config/jenkins/'
 				sshagent (credentials: ['Jenkins-CI']) {
 					sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
 				}
-				sh 'pwd'
-				sh 'ls -al config/jenkins/'
+				
 				sh 'config/jenkins/test.cmd'
             }
         }
