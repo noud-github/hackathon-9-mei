@@ -5,12 +5,11 @@ pipeline {
 			steps {
 				sh 'pwd'
 				sh 'ls -al config/jenkins/'
-				try {
+				catchError {
 					sshagent (credentials: ['Jenkins-CI']) {
 						sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
 					}
-                } catch (err) {
-                	echo err.getMessage()
+                
             	}
 				
 				
