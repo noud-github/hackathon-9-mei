@@ -6,7 +6,7 @@ pipeline {
 				sh 'pwd'
 				sh 'ls -al config/jenkins/'
 				catchError {
-					sshagent ('Jenkins-CI') {
+					sshAgent ('Jenkins-CI') {
 						sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
 					}
                 
