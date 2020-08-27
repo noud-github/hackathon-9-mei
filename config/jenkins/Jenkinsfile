@@ -1,33 +1,29 @@
 pipeline {
     agent { docker { image 'ubuntu' } }
     stages {
-		stage('PushTheTag') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'mySecretText', variable: 'SSH_PASSPHRASE')]) {
-                        sh "echo 'echo \$SSH_PASSPHRASE' > ~/.ssh/tmp && chmod 700 ~/.ssh/tmp"
-                        sh "eval `ssh-agent -s` && cat ~/.ssh/id_ed25519|DISPLAY=None SSH_ASKPASS=~/.ssh/tmp ssh-add - && ssh-add -l ; kill -9 \$SSH_AGENT_PID"
-                    }
-                }
-            }
-        }
         stage('build') {
 			steps {
 				sh 'apt-get update && apt-get install openssh-client --yes'
 				sh 'pwd'
 				sh 'ls -al config/jenkins/'
-				sh 'ssh-add -l'
-				sh 'sleep 100 '
 				catchError {
+					sshagent (credentials: ['Jenkins-CI']) {
 					sshagent ('Jenkins-CI') {
 						sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
 					}
-                
-            	}
-				
-				
 				sh 'config/jenkins/test.cmd'
             }
         }
+		/* stage('PushTheTag') {
+        *  steps {
+        *        script {
+        *            withCredentials([string(credentialsId: 'mySecretText', variable: 'SSH_PASSPHRASE')]) {
+        *                sh "echo 'echo \$SSH_PASSPHRASE' > ~/.ssh/tmp && chmod 700 ~/.ssh/tmp"
+        *                sh "eval `ssh-agent -s` && cat ~/.ssh/id_ed25519|DISPLAY=None SSH_ASKPASS=~/.ssh/tmp ssh-add - && ssh-add -l ; kill -9 \$SSH_AGENT_PID"
+        *            }
+        *        }
+        *    }
+        *}
+		*/
     }
 }
