@@ -8,9 +8,9 @@ pipeline {
 				sh 'ls -al config/jenkins/'
 				catchError {
 					sshagent (credentials: ['Jenkins-CI']) {
-					sshagent ('Jenkins-CI') {
 						sh 'ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a'
 					}
+				}
 				sh 'config/jenkins/test.cmd'
             }
         }
@@ -23,8 +23,7 @@ pipeline {
         *            }
         *        }
         *    }
-		*/
         }
-		
+		*/
     }
 }
