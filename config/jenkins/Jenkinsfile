@@ -8,6 +8,7 @@ pipeline {
     stages {
         stage('build') {
 			steps {
+				sh 'echo "Will deploy to ${DEPLOY_ENV}"'
 				sh 'apt-get update && apt-get install openssh-client --yes'
 				sh 'mkdir ~/.ssh'
 				sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
