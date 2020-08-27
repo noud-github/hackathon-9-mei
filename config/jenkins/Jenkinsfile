@@ -1,15 +1,13 @@
+properties([
+  parameters([
+    string(name: 'DEPLOY_ENV', defaultValue: 'TESTING', description: 'The target environment', )
+   ])
+])
 pipeline {
     agent { docker { image 'ubuntu' } }
-    
-	parameters {
-        booleanParam(defaultValue: true, description: '', name: 'userFlag')
-    }
-
-	
-	stages {
+    stages {
         stage('build') {
 			steps {
-				sh 'echo "flag: ${params.userFlag}"'
 				sh 'apt-get update && apt-get install openssh-client --yes'
 				sh 'mkdir ~/.ssh'
 				sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
