@@ -7,11 +7,13 @@ node( 'docker-agent' ) {
 
 	docker.withServer( 'tcp://172.17.0.1:2375' ) {
 		stage('build') {
-			def ubuntu = docker.image( 'ubuntu' )
+			def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
 			ubuntu.pull()
-			ubuntu.inside(  ) { 
+			ubuntu.inside( '-e SC_ATTR=yoast-seo' ) { 
 				sh 'echo "Will deploy to ${DEPLOY_ENV}"'
+				/*
 				sh 'apt-get update && apt-get install openssh-client --yes'
+				*/
 				sh 'mkdir ~/.ssh'
 				sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
 				sh 'pwd'
