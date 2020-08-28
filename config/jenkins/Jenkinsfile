@@ -12,7 +12,7 @@ node( 'docker-agent' ) {
 			ubuntu.inside( '-e SC_ATTR="yoast-seo" -e REPOBASE=testrepo ' ) { 
 				sh 'echo "Will deploy to ${DEPLOY_ENV}"'
 				sh 'echo "SC_ATTR is set to  ${yoast-seo} " '
-				sh '[[ -d "$REPOBASE" ]] && rm -rf "$REPOBASE"'
+				sh 'rm -rf "$REPOBASE"'
     			sh 'mkdir -p "$REPOBASE"'
 				sh 'cd $REPOBASE && git clone https://github.com/noud-github/wordpress-seo.git'
 				sh 'mkdir ~/.ssh'
