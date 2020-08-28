@@ -5,9 +5,9 @@ properties([
 ])
 node( 'docker-agent' ) {
 
-      docker.withServer( 'tcp://172.17.0.1:2375' ) {
-    
-          def ubuntu = docker.image( 'ubuntu' )
+	docker.withServer( 'tcp://172.17.0.1:2375' ) {
+		stage('build') {
+			def ubuntu = docker.image( 'ubuntu' )
 			ubuntu.pull()
 			ubuntu.inside(  ) { 
 				sh 'echo "Will deploy to ${DEPLOY_ENV}"'
@@ -23,6 +23,6 @@ node( 'docker-agent' ) {
 				}
 				sh 'config/jenkins/test.cmd'
 			}
-        }
-
+		}
+	}
 }
