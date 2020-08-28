@@ -9,7 +9,7 @@ node( 'docker-agent' ) {
 		stage('build') {
 			def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
 			ubuntu.pull()
-			ubuntu.inside( '-e SC_ATTR="yoast-seo" REPOBASE=testrepo ' ) { 
+			ubuntu.inside( '-e SC_ATTR="yoast-seo" -e REPOBASE=testrepo ' ) { 
 				sh 'echo "Will deploy to ${DEPLOY_ENV}"'
 				sh 'echo "SC_ATTR is set to  ${yoast-seo} " '
 				sh '[[ -d "$REPOBASE" ]] && rm -rf "$REPOBASE"'
