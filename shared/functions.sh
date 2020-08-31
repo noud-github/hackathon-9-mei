@@ -245,44 +245,10 @@ markdown2html(){
 
 }
 
-
-
-
 Update_Yoastdotcom_Changelog_Post(){
 
     scp $BASEDIR/new_changelog.html $SSH_HOST:~/dump/$ChanglogPostid.new_changelog.html
     ssh $SSH_HOST  'cd '$WP_FILES' && wp post update '$ChanglogPostid' ~/dump/'$ChanglogPostid'.new_changelog.html'
     ssh $SSH_HOST  -t 'rm ~/dump/'$ChanglogPostid'.new_changelog.html'  
 
-}
-
-
-yarn(){
-    docker_exec yarn $@
-}
-
-grunt(){
-    docker_exec grunt $@
-}
-
-composer(){
-    docker_exec composer $@
-}
-
-docker_exec(){
-    local MyCommand="$@"
-    #add path mapping
-    if [[ $(pwd | grep $REPOBASE/$FOLDER_NAME) ]]; then
-        if [[ "$(pwd)" != "$REPOBASE/$FOLDER_NAME" ]]; then
-            releative_path=$(pwd | sed -e "s|$REPOBASE/$FOLDER_NAME/||" )
-            #echo "cd to $releative_path"
-            MyCommand="cd $releative_path/ && $@"
-        fi
-    fi
-    if [[ -f /etc/os-release ]]; then
-        echo -e "\e[97mrunning: \e[33m$MyCommand \e[39min container"
-    else
-        echo -e "running: $MyCommand in container"
-    fi
-    docker exec -it -u $UID:$UID docker_mytools_1 bash -c "$MyCommand"
 }
