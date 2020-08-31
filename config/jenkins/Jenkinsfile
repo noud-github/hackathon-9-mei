@@ -7,7 +7,7 @@ properties([
    ])
 ])
 node( 'docker-agent' ) {
-
+	checkout scm
 	docker.withServer( 'tcp://172.17.0.1:2375' ) {
 		stage('build') {
 			def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
