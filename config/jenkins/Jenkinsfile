@@ -19,7 +19,9 @@ node( 'docker-agent' ) {
 				sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
 				sh 'rm -rf "$REPOBASE"'
     			sh 'mkdir -p "$REPOBASE"'
+				/*
 				sh 'cd $REPOBASE && git clone https://github.com/noud-github/wordpress-seo.git'
+				*/
 				sh 'mkdir ~/.ssh'
 				sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
 				sh 'pwd'
