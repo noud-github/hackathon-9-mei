@@ -1,6 +1,9 @@
 properties([
   parameters([
     string(name: 'DEPLOY_ENV', defaultValue: 'TESTING', description: 'The target environment', )
+	string(name: 'README_FILE', defaultValue: 'readme.txt', description: 'The readme file name', )
+	string(name: 'FOLDER_NAME', defaultValue: 'wordpress-seo', description: 'what is the folder name', )
+	string(name: 'ChanglogPostid', defaultValue: '1292114', description: 'POST ID ON YOAST.COM OF CHANGELOG', )
    ])
 ])
 node( 'docker-agent' ) {
@@ -10,14 +13,16 @@ node( 'docker-agent' ) {
 			def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
 			ubuntu.pull()
 			ubuntu.inside( '-e SC_ATTR="yoast-seo" -e REPOBASE=testrepo ' ) { 
+				/*
 				sh 'echo "Will deploy to ${DEPLOY_ENV}"'
+				*/ 
 				sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
 				sh 'rm -rf "$REPOBASE"'
     			sh 'mkdir -p "$REPOBASE"'
 				sh 'cd $REPOBASE && git clone https://github.com/noud-github/wordpress-seo.git'
 				sh 'mkdir ~/.ssh'
 				sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
-				sh 'pwd'
+				sh ''
 				sh 'ls -al config/jenkins/'
 				catchError {
 					sshagent (credentials: ['Jenkins-CI']) {
