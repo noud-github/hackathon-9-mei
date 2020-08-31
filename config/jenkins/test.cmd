@@ -1,4 +1,7 @@
 
+
+ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
+
 ls -al
 
 source ./shared/functions.sh
