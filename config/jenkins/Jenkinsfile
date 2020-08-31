@@ -22,7 +22,7 @@ node( 'docker-agent' ) {
 				sh 'cd $REPOBASE && git clone https://github.com/noud-github/wordpress-seo.git'
 				sh 'mkdir ~/.ssh'
 				sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
-				sh ''
+				sh 'pwd'
 				sh 'ls -al config/jenkins/'
 				catchError {
 					sshagent (credentials: ['Jenkins-CI']) {
