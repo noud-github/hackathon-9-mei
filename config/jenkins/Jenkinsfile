@@ -22,7 +22,7 @@ node( 'docker-agent' ) {
 				sh 'pwd'
 				sh 'ls -al config/jenkins/'
 				catchError {
-					sshagent (credentials: ['Jenkins-CI']) {
+					sshagent (credentials: ['Jenkins-CII']) {
 						sh 'bash config/jenkins/test.cmd'
 					}
 				}
