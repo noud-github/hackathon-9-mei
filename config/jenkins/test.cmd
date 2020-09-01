@@ -1,4 +1,8 @@
 
+BASEDIR=$(pwd)
+REPOBASE=$BASEDIR/.repos
+RELEASEBRANCH='release/'${YOAST_TAG}
+
 
 ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
 
@@ -26,10 +30,7 @@ Check_Package_Versions
 #Remove the artifact folder if present
 rm -rf  artifact
 
-#make sure you have the latest dependencies are loaded in your node_modules folder
-#docker exec -it -u $UID:$UID docker_mytools_1 yarn
 yarn
 
 #Update version
-#docker exec -it -u $UID:$UID docker_mytools_1 grunt set-version \-\-new-version=${YOAST_TAG}
 grunt set-version --new-version=14.9
