@@ -13,13 +13,9 @@ node( 'docker-agent' ) {
 			def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
 			ubuntu.pull()
 			ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
-				/*
-				sh 'echo "Will deploy to ${DEPLOY_ENV}"'
-				*/ 
 				sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
 				sh 'mkdir ~/.ssh'
 				sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
-				sh 'pwd'
 				sh 'ls -al config/jenkins/'
 				catchError {
 					sshagent (credentials: ['Jenkins-CII']) {

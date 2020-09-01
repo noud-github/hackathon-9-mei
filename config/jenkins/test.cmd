@@ -1,21 +1,11 @@
-set -e 
-BASEDIR=$(pwd)
-REPOBASE=$BASEDIR/.repos
-RELEASEBRANCH='release/'${YOAST_TAG}
-
-if [[ "$HOTFIX" = "true" ]]; then
-    echo "HOTFIX= "$HOTFIX 
-    echo "using hotfix/XX.X instead of release/X.XX"
-    echo "and no hard error on missing milestone" 
-    RELEASEBRANCH='hotfix/'${YOAST_TAG}
-fi
-
+source ./shared/init.sh
+source ./shared/functions.sh
 
 ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
 
-ls -al
+pwd
 
-source ./shared/functions.sh
+ls -al
 
 Go_To_New_Repo_Directory
 
