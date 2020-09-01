@@ -1,5 +1,6 @@
 source ./shared/init.sh
 source ./shared/functions.sh
+source ./config/jenkins/functions.sh
 
 ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
 
