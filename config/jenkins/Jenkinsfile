@@ -1,6 +1,6 @@
 properties([
   parameters([
-    string(name: 'DEPLOY_ENV', defaultValue: 'TESTING', description: 'The target environment', ),
+    string(name: 'YOAST_TAG', defaultValue: '15.0', description: 'The target environment', ),
 	string(name: 'README_FILE', defaultValue: 'readme.txt', description: 'The readme file name', ),
 	string(name: 'FOLDER_NAME', defaultValue: 'wordpress-seo', description: 'what is the folder name', ),
 	string(name: 'ChanglogPostid', defaultValue: '1292114', description: 'POST ID ON YOAST.COM OF CHANGELOG', )
@@ -12,7 +12,7 @@ node( 'docker-agent' ) {
 		stage('build') {
 			def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
 			ubuntu.pull()
-			ubuntu.inside( '-e SC_ATTR="yoast-seo" -e REPOBASE=testrepo ' ) { 
+			ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
 				/*
 				sh 'echo "Will deploy to ${DEPLOY_ENV}"'
 				*/ 
