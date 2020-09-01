@@ -20,7 +20,7 @@ cd ${FOLDER_NAME}
 
 echo "guess the number: "$(Get_Release_X.XX)
 
-git checkout release/14.9
+git checkout $RELEASEBRANCH
 
 git merge origin/master
 
