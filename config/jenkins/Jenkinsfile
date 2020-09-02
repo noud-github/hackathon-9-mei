@@ -1,6 +1,7 @@
 properties([
   parameters([
     string(name: 'YOAST_TAG', defaultValue: '15.0', description: 'The target environment', ),
+	string(name: 'MYARG', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
 	string(name: 'README_FILE', defaultValue: 'readme.txt', description: 'The readme file name', ),
 	string(name: 'FOLDER_NAME', defaultValue: 'wordpress-seo', description: 'what is the folder name', ),
 	string(name: 'ChanglogPostid', defaultValue: '1292114', description: 'POST ID ON YOAST.COM OF CHANGELOG', )
@@ -19,7 +20,7 @@ node( 'docker-agent' ) {
 				sh 'ls -al config/jenkins/'
 				catchError {
 					sshagent (credentials: ['Jenkins-CII']) {
-						sh 'bash config/jenkins/test.cmd'
+						sh 'bash config/jenkins/test.cmd $MYARG'
 					}
 				}
 				
