@@ -45,6 +45,7 @@ GET_Monorepro_Highest_Release() {
 
 Check_Package_Versions () {
     local PressEnter=false
+	local message=""
     local lines=$(grep '"@*yoast[^"]' package.json) 
     while read  line ; do
         echo "Processing $line"
@@ -54,7 +55,8 @@ Check_Package_Versions () {
         if [[ "$RELESEDVERSION" = "$VERSION" ]]; then
             echo "ok"
         else
-            echo $REPRO "is set to wrong version" $VERSION "in package.json expected version:" $RELESEDVERSION 
+            message="$message/n"$REPRO "is set to wrong version" $VERSION "in package.json expected version:" $RELESEDVERSION 
+			echo $REPRO "is set to wrong version" $VERSION "in package.json expected version:" $RELESEDVERSION 
             if [[ "$LIVE" = "true" ]]; then
                 if [[ "$REPRO" = "@yoast/grunt-plugin-tasks" ]]; then
                     echo "ignoring this for repo: $REPRO" 
@@ -77,6 +79,7 @@ Check_Package_Versions () {
     if [[ "$PressEnter" = "true" ]]; then
         read -p "Press enter to continue"
 		TASK_RESULT="FAILURE"
+		EXIT_MESSAGE="$message"
     fi
 }
 
@@ -249,6 +252,7 @@ Update_Yoastdotcom_Changelog_Post(){
 Set_Exit_Code(){
 	if [[ "$TASK_RESULT" = ""FAILURE"" ]]; then
 		echo "$TASK_RESULT"
+		echo "$EXIT_MESSAGE"
 		exit 1
 	fi
 }

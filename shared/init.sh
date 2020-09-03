@@ -10,7 +10,7 @@ WP_FILES="/home/staging-yoast/staging.yoast.com/web"
 SSH_HOST="staging"
 SITE_URL="staging.yoast.com"
 TASK_RESULT="SUCCESS"
-
+EXIT_MESSAGE=""
 
 [[ "$1" = "live" ]] && LIVE="true"
 [[ "$1" = "pre" ]] && PRE="true"
@@ -29,7 +29,6 @@ fi
 
 if [[ "$LIVE" = "true" ]]; then
     echo "live!!!"
-    read -p "Press enter to continue"
     PRE="false"
     WP_FILES="/home/yoast/shared/yoast.com/www/web"
     SSH_HOST="yoast"
