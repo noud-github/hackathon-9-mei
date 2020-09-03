@@ -9,6 +9,8 @@ GITHUBACOUNT='yoast'
 WP_FILES="/home/staging-yoast/staging.yoast.com/web"
 SSH_HOST="staging"
 SITE_URL="staging.yoast.com"
+TASK_RESULT="SUCCESS"
+
 
 [[ "$1" = "live" ]] && LIVE="true"
 [[ "$1" = "pre" ]] && PRE="true"

@@ -31,4 +31,7 @@ rm -rf  artifact
 yarn
 
 #Update version
-grunt set-version --new-version=14.9
+grunt set-version --new-version=${YOAST_TAG}
+
+
+echo "$TASK_RESULT"

@@ -76,6 +76,7 @@ Check_Package_Versions () {
     done <<<  "$(echo -e "$lines")"
     if [[ "$PressEnter" = "true" ]]; then
         read -p "Press enter to continue"
+		TASK_RESULT="FAILURE"
     fi
 }
 
@@ -87,14 +88,10 @@ Check_Milestone () {
             echo "There are $OPENISSUES open issues in the milestone!!!"
             if [[ "$LIVE" = "true" ]]; then
                 #todo: slack message to #channel?
-                if [[ "$HOTFIX" = "true" ]]; then
-                    read -p "Press enter to continue"
-                else
-                    exit 1
-                fi     
+                exit 1                
             fi
             if [[ "$PRE" = "true" ]]; then
-                read -p "Press enter to continue"
+                TASK_RESULT="FAILURE"
                 #exit 1
             fi 
         fi
@@ -103,13 +100,13 @@ Check_Milestone () {
         if [[ "$LIVE" = "true" ]]; then
             #todo: slack message to #channel?
             if [[ "$HOTFIX" = "true" ]]; then
-                    read -p "Press enter to continue"
+                    echo "this is a hotfix"
                 else
                     exit 1
             fi     
         fi
         if [[ "$PRE" = "true" ]]; then
-            read -p "Press enter to continue"
+            TASK_RESULT="FAILURE"
             #exit 1
         fi 
     fi
@@ -177,11 +174,7 @@ fi
 }
 
 Calc_md5 (){
-    if [[ -f /etc/os-release ]]; then
-        md5_url=`echo -n $YOAST_DOWNLOAD_URL | md5sum |  cut -d ' ' -f 1`
-    else
-        md5_url=`echo -n $YOAST_DOWNLOAD_URL | openssl md5 `
-    fi
+    md5_url=`echo -n $YOAST_DOWNLOAD_URL | md5sum |  cut -d ' ' -f 1`
 }
 
 
