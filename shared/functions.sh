@@ -245,3 +245,10 @@ Update_Yoastdotcom_Changelog_Post(){
     ssh $SSH_HOST  -t 'rm ~/dump/'$ChanglogPostid'.new_changelog.html'  
 
 }
+
+Set_Exit_Code(){
+	if [[ "$TASK_RESULT" = ""FAILURE"" ]]; then
+		echo "$TASK_RESULT"
+		exit 1
+	fi
+}
