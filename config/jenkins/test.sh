@@ -33,5 +33,5 @@ yarn
 #Update version
 grunt set-version --new-version=${YOAST_TAG}
 
+Set_Exit_Code
 
-echo "$TASK_RESULT"
