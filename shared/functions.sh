@@ -80,7 +80,7 @@ Check_Package_Versions () {
     if [[ "$PressEnter" = "true" ]]; then
         read -p "Press enter to continue"
 		TASK_RESULT="FAILURE"
-		EXIT_MESSAGE="$message"
+		EXIT_MESSAGE="$EXIT_MESSAGE\n$message"
     fi
 }
 
