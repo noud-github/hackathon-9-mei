@@ -22,11 +22,24 @@ Check_For_Changelog_Entry_IN_Readme_file(){
             exit 1
         fi
         if [[ "$PRE" = "true" ]]; then
-            read -p "Press enter to continue"
+            TASK_RESULT="FAILURE"
+			EXIT_MESSAGE="$EXIT_MESSAGE\ndid not find Changlog entry"
         fi
         echo "NOT ok!!!"
     fi
-
+	# test for ^= YOAST_TAG = entry in Changelog 
+	foundtag=$(echo "$RELEASE_TXT" |  grep -e '^= '$YOAST_TAG' =')
+	if [[ "$foundtag" = "" ]]; then
+    	echo "missing = $YOAST_TAG = line in release log this will break release post on Wordpress.com!!"
+    if [[ "$LIVE" = "true" ]]; then
+            #todo: slack message to #channel?
+            exit 1
+        fi
+        if [[ "$PRE" = "true" ]]; then
+            TASK_RESULT="FAILURE"
+			EXIT_MESSAGE="$EXIT_MESSAGE\nmissing = $YOAST_TAG = line in release log this will break release post on Wordpress.com!!"
+        fi
+    fi
 }
 
 Check_Release_Date_In_Changelog_Section_Readme(){
@@ -62,7 +75,8 @@ Check_For_Blank_Lines_After_Header_In_Changelog_Section_Readme(){
             exit 1
         fi
         if [[ "$PRE" = "true" ]]; then
-            read -p "Press enter to continue"
+            TASK_RESULT="FAILURE"
+			EXIT_MESSAGE="$EXIT_MESSAGE\nfound missing NEWLINE after header in ${README_FILE}"
         fi
     fi
 }
@@ -92,7 +106,8 @@ Select_Changlog_From_Readme(){
             exit 1
         fi
         if [[ "$PRE" = "true" ]]; then
-            read -p "Press enter to continue"
+            TASK_RESULT="FAILURE"
+			EXIT_MESSAGE="$EXIT_MESSAGE\nrelease text not found!!!"
         fi
     fi
 }
