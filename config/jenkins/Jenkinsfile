@@ -8,23 +8,24 @@ properties([
    ])
 ])
 node( 'docker-agent' ) {
-	withCredentials([string(credentialsId: 'GITHUB_ACCESS_TOKEN', variable: 'GITHUB_ACCESS_TOKEN')])
-	checkout scm
-	docker.withServer( 'tcp://172.17.0.1:2375' ) {
-		stage('build') {
-			def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
-			ubuntu.pull()
-			ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
-				sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
-				sh 'mkdir ~/.ssh'
-				sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
-				sh 'ls -al config/jenkins/'
-				catchError {
-					sshagent (credentials: ['Jenkins-CII']) {
-						sh 'bash config/jenkins/test.sh $MYARG'
+	withCredentials([string(credentialsId: 'GITHUB_ACCESS_TOKEN', variable: 'GITHUB_ACCESS_TOKEN')]){
+		checkout scm
+		docker.withServer( 'tcp://172.17.0.1:2375' ) {
+			stage('build') {
+				def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
+				ubuntu.pull()
+				ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
+					sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
+					sh 'mkdir ~/.ssh'
+					sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
+					sh 'ls -al config/jenkins/'
+					catchError {
+						sshagent (credentials: ['Jenkins-CII']) {
+							sh 'bash config/jenkins/test.sh $MYARG'
+						}
 					}
+					
 				}
-				
 			}
 		}
 	}
