@@ -55,7 +55,7 @@ Check_Package_Versions () {
         if [[ "$RELESEDVERSION" = "$VERSION" ]]; then
             echo "ok"
         else
-            message="$message/n"$REPRO "is set to wrong version" $VERSION "in package.json expected version:" $RELESEDVERSION 
+            message="$message/n $REPRO is set to wrong version $VERSION in package.json expected version: $RELESEDVERSION" 
 			echo "message: $message"
 			echo $REPRO "is set to wrong version" $VERSION "in package.json expected version:" $RELESEDVERSION 
             if [[ "$LIVE" = "true" ]]; then
