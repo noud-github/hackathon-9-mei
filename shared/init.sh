@@ -41,5 +41,5 @@ else
     fi
 fi
 
-git config user.email "yoastbot-ci@yoast.com"
-git config user.name "YoastBot CI"
+git config --global user.email "yoastbot-ci@yoast.com"
+git config --global user.name "YoastBot CI"
