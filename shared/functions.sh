@@ -96,7 +96,7 @@ Check_Milestone () {
             fi
             if [[ "$PRE" = "true" ]]; then
                 TASK_RESULT="FAILURE"
-                EXIT_MESSAGE="$EXIT_MESSAGE There are $OPENISSUES open issues in the milestone!!!"
+                EXIT_MESSAGE="$EXIT_MESSAGE\nThere are $OPENISSUES open issues in the milestone!!!"
             fi 
         fi
     else
@@ -111,7 +111,7 @@ Check_Milestone () {
         fi
         if [[ "$PRE" = "true" ]]; then
             TASK_RESULT="FAILURE"
-            EXIT_MESSAGE="$EXIT_MESSAGE There is no $YOAST_TAG milestone!!!"
+            EXIT_MESSAGE="$EXIT_MESSAGE\nThere is no $YOAST_TAG milestone!!!"
         fi 
     fi
     echo "done milestone check for ${FOLDER_NAME} ${YOAST_TAG}"
