@@ -2,6 +2,9 @@ source ./shared/init.sh
 source ./shared/functions.sh
 source ./config/jenkins/functions.sh
 
+
+####screen -r
+
 #ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
 
 Check_Milestone
@@ -43,7 +46,7 @@ git status
 git commit -m "Bump version to ${YOAST_TAG}"
 
 # if more files changed than giit add than bail out'
-Check_If_More_Files_Changed_Than_Expected
+grunt ensure-clean-branch
 
 if [[ "$LIVE" = "true" ]]; then
     echo push to ${RELEASEBRANCH}

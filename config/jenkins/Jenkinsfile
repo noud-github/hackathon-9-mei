@@ -2,29 +2,29 @@ properties([
   parameters([
     string(name: 'YOAST_TAG', defaultValue: '15.0', description: 'The target environment', ),
 	string(name: 'MYARG', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
-	string(name: 'README_FILE', defaultValue: 'readme.txt', description: 'The readme file name', ),
-	string(name: 'FOLDER_NAME', defaultValue: 'wordpress-seo', description: 'what is the folder name', ),
-	string(name: 'ChanglogPostid', defaultValue: '1292114', description: 'POST ID ON YOAST.COM OF CHANGELOG', )
-   ])
+	string(name: 'README_FILE', defaultValue: 'readme.txt', description: 'The readme file name', )
+	])
 ])
 node( 'docker-agent' ) {
 	withCredentials([string(credentialsId: 'GITHUB_ACCESS_TOKEN', variable: 'GITHUB_ACCESS_TOKEN')]){
-		checkout scm
-		docker.withServer( 'tcp://172.17.0.1:2375' ) {
-			stage('build') {
-				def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
-				ubuntu.pull()
-				ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
-					sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
-					sh 'mkdir ~/.ssh'
-					sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
-					sh 'ls -al config/jenkins/'
-					catchError {
-						sshagent (credentials: ['Jenkins-CII']) {
-							sh 'bash config/jenkins/test.sh $MYARG'
+		withEnv(['ChanglogPostid=1292114','FOLDER_NAME=wordpress-seo']){
+			checkout scm
+			docker.withServer( 'tcp://172.17.0.1:2375' ) {
+				stage('build') {
+					def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
+					ubuntu.pull()
+					ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
+						sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
+						sh 'mkdir ~/.ssh'
+						sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
+						sh 'ls -al config/jenkins/'
+						catchError {
+							sshagent (credentials: ['Jenkins-CII']) {
+								sh 'bash config/jenkins/test.sh $MYARG'
+							}
 						}
+						
 					}
-					
 				}
 			}
 		}
