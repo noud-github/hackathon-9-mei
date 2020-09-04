@@ -8,6 +8,7 @@ properties([
    ])
 ])
 node( 'docker-agent' ) {
+	withCredentials([string(credentialsId: 'GITHUB_ACCESS_TOKEN', variable: 'GITHUB_ACCESS_TOKEN')])
 	checkout scm
 	docker.withServer( 'tcp://172.17.0.1:2375' ) {
 		stage('build') {
