@@ -252,7 +252,7 @@ Update_Yoastdotcom_Changelog_Post(){
 
 Set_Exit_Code(){
 	if [[ "$TASK_RESULT" = ""FAILURE"" ]]; then
-		echo -e "Did not pass test because:$EXIT_MESSAGE"
+		echo -e "Summery why it did not pass tests:$EXIT_MESSAGE"
 		exit 1
 	fi
 }

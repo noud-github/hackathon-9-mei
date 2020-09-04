@@ -27,19 +27,7 @@ Check_For_Changelog_Entry_IN_Readme_file(){
         fi
         echo "NOT ok!!!"
     fi
-	# test for ^= YOAST_TAG = entry in Changelog 
-	foundtag=$(echo "$RELEASE_TXT" |  grep -e '^= '$YOAST_TAG' =')
-	if [[ "$foundtag" = "" ]]; then
-    	echo "missing = $YOAST_TAG = line in release log this will break release post on Wordpress.com!!"
-    if [[ "$LIVE" = "true" ]]; then
-            #todo: slack message to #channel?
-            exit 1
-        fi
-        if [[ "$PRE" = "true" ]]; then
-            TASK_RESULT="FAILURE"
-			EXIT_MESSAGE="$EXIT_MESSAGE\nmissing = $YOAST_TAG = line in release log this will break release post on Wordpress.com!!"
-        fi
-    fi
+	
 }
 
 Check_Release_Date_In_Changelog_Section_Readme(){
@@ -108,6 +96,19 @@ Select_Changlog_From_Readme(){
         if [[ "$PRE" = "true" ]]; then
             TASK_RESULT="FAILURE"
 			EXIT_MESSAGE="$EXIT_MESSAGE\nrelease text not found!!!"
+        fi
+    fi
+	# test for ^= YOAST_TAG = entry in Changelog 
+	foundtag=$(echo "$RELEASE_TXT" |  grep -e '^= '$YOAST_TAG' =')
+	if [[ "$foundtag" = "" ]]; then
+    	echo "missing = $YOAST_TAG = line in release log this will break release post on Wordpress.com!!"
+    if [[ "$LIVE" = "true" ]]; then
+            #todo: slack message to #channel?
+            exit 1
+        fi
+        if [[ "$PRE" = "true" ]]; then
+            TASK_RESULT="FAILURE"
+			EXIT_MESSAGE="$EXIT_MESSAGE\nmissing = $YOAST_TAG = line in release log this will break release post on Wordpress.com!!"
         fi
     fi
 }
