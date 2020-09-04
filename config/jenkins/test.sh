@@ -2,9 +2,7 @@ source ./shared/init.sh
 source ./shared/functions.sh
 source ./config/jenkins/functions.sh
 
-
 ####screen -r
-
 #ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
 
 Check_Milestone
@@ -58,6 +56,33 @@ git pull
 git merge --no-ff ${RELEASEBRANCH} -m "Merge branch '${RELEASEBRANCH}'"
 
 Set_SVN_to_Silent
+
+grunt deploy:master
+
+git status
+
+git add readme.txt
+git add wp-seo-main.php
+git add wp-seo.php
+git add svn-assets/.
+
+git status
+
+git commit -m "Bump version to ${YOAST_TAG}"
+
+# if more files changed than giit add than bail out'
+grunt ensure-clean-branch
+
+git tag -a ${YOAST_TAG} -m "${YOAST_TAG}"
+
+if [[ "$LIVE" = "true" ]]; then
+    echo push to master
+    git push origin master --tags
+else
+    echo push to CI-test
+    git push origin master:CI-test --force --quiet
+fi
+
 
 Set_Exit_Code
 
