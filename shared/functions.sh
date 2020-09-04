@@ -56,6 +56,7 @@ Check_Package_Versions () {
             echo "ok"
         else
             message="$message/n"$REPRO "is set to wrong version" $VERSION "in package.json expected version:" $RELESEDVERSION 
+			echo "message: $message"
 			echo $REPRO "is set to wrong version" $VERSION "in package.json expected version:" $RELESEDVERSION 
             if [[ "$LIVE" = "true" ]]; then
                 if [[ "$REPRO" = "@yoast/grunt-plugin-tasks" ]]; then
