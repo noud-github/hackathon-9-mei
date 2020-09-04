@@ -19,7 +19,6 @@ EXIT_MESSAGE=""
 [[ "$2" = "pre" ]] && PRE="true"
 [[ "$2" = "hotfix" ]] && HOTFIX="true"
 
-
 if [[ "$HOTFIX" = "true" ]]; then
     echo "HOTFIX= "$HOTFIX 
     echo "using hotfix/XX.X instead of release/X.XX"
@@ -42,3 +41,5 @@ else
     fi
 fi
 
+git config user.email "yoastbot-ci@yoast.com"
+git config user.name "YoastBot CI"
