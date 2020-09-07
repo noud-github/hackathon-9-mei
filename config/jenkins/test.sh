@@ -7,7 +7,7 @@ source ./config/jenkins/functions.sh
 
 svn --version
 
-Install_SVN()
+Install_SVN
 
 svn --version
 
