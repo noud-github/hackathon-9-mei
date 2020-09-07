@@ -5,13 +5,6 @@ source ./config/jenkins/functions.sh
 ####screen -r
 #ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
 
-# install svn config
-
-
-
-
-exit 0
-
 Check_Milestone
 
 Go_To_New_Repo_Directory
@@ -79,7 +72,7 @@ git status
 
 git commit -m "Bump version to ${YOAST_TAG}"
 
-# if more files changed than giit add than bail out'
+# if more files changed than git add than bail out'
 grunt ensure-clean-branch
 
 git tag -a ${YOAST_TAG} -m "${YOAST_TAG}"
