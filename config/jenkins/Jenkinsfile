@@ -33,7 +33,7 @@ node( 'docker-agent' ) {
 							}
 						}
 					}
-					sh 'rm -rf ~/.subversion'
+					sh 'rm -rf ~/.subversion ~/.ssh'
 				}
 			}
 		}
