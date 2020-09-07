@@ -7,10 +7,12 @@ source ./config/jenkins/functions.sh
 
 echo "$PATH"
 
-svn --version
+#witch svn
+#svn --version
 
 Install_SVN
 
+witch svn
 svn --version
 
 echo "$PATH"
