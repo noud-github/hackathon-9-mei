@@ -2,8 +2,8 @@ properties([
   parameters([
     string(name: 'YOAST_TAG', defaultValue: '15.0', description: 'The target environment', ),
 	string(name: 'MYARG', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
-	string(name: 'README_FILE', defaultValue: 'readme.txt', description: 'The readme file name', ),
-	string(name: 'TEST_PASSWD', defaultValue: 'abcdefg', description: 'to test passwd substitution.', )
+	string(name: 'README_FILE', defaultValue: 'readme.txt', description: 'The readme file name', )
+	
 	])
 ])
 node( 'docker-agent' ) {
@@ -17,13 +17,14 @@ node( 'docker-agent' ) {
 					ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
 						sh 'ln -s  $(pwd)/config/tools/svn.py /bin/svn'
 						withCredentials([file(credentialsId: 'subversion.tar.gz', variable: 'FILE')]) {
-    						dir('subversion') {
-      							sh 'tar -xzf $FILE --directory ~/'
-								sh 'sed -i s/{password}/$TEST_PASSWD/g ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
+							withCredentials([string(credentialsId: 'SUBVERSION_TOKEN', variable: 'SUBVERSION_TOKEN')]){
+								dir('subversion') {
+									sh 'tar -xzf $FILE --directory ~/'
+									sh 'sed -i s/{password}/$SUBVERSION_TOKEN/g ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
+								}
 							}
   						}
-						sh 'cat ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
-						sh 'ls -al /bin'
+						sh 'sleep 1000'
 						sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
 						sh 'mkdir ~/.ssh'
 						sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
