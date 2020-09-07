@@ -5,12 +5,20 @@ source ./config/jenkins/functions.sh
 ####screen -r
 #ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
 
+svn --version
+
+Install_SVN()
+
+svn --version
+
+exit 1
+
 Check_Milestone
 
 Go_To_New_Repo_Directory
 
-git clone https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
-#git clone https://github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
+#git clone https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
+git clone https://github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
 
 cd ${FOLDER_NAME}
 
