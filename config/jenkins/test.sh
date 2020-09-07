@@ -4,7 +4,7 @@ source ./config/jenkins/functions.sh
 
 ####screen -r
 
-ssh -o StrictHostKeyChecking=no staging uname -a
+ssh -o StrictHostKeyChecking=no $SSH_HOST uname -a
 
 Check_Milestone
 
@@ -59,8 +59,8 @@ git pull
 git merge --no-ff ${RELEASEBRANCH} -m "Merge branch '${RELEASEBRANCH}'"
 
 
-Install_SVN
-Set_SVN_to_Silent
+#Install_SVN
+#Set_SVN_to_Silent
 
 grunt deploy:master
 
