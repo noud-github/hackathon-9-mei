@@ -4,10 +4,6 @@ source ./config/jenkins/functions.sh
 
 ####screen -r
 
-ssh -o StrictHostKeyChecking=no $SSH_HOST uname -a
-
-Check_Milestone
-
 Go_To_New_Repo_Directory
 
 #git clone https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
@@ -18,6 +14,8 @@ cd ${FOLDER_NAME}
 SET_Release_Branch
 
 echo "release: $YOAST_TAG"
+
+Check_Milestone
 
 git checkout $RELEASEBRANCH
 
