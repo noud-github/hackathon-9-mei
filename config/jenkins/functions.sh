@@ -1,6 +1,7 @@
 Install_SVN(){
     if [[ "$LIVE" = "true" && "$GITHUBACOUNT" = "Yoast" ]]; then
         echo install svn
+		hash -d svn
         apt-get update
         apt-get -y install subversion 
     else
