@@ -11,6 +11,9 @@ Install_SVN
 
 svn --version
 
+
+cat /tmp/log.txt
+
 exit 1
 
 Check_Milestone
