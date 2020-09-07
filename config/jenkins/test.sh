@@ -5,12 +5,15 @@ source ./config/jenkins/functions.sh
 ####screen -r
 #ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
 
+echo "$PATH"
+
 svn --version
 
 Install_SVN
 
 svn --version
 
+echo "$PATH"
 
 cat /tmp/log.txt
 
@@ -94,6 +97,7 @@ else
     git push origin master:CI-test --force --quiet
 fi
 
+cat /tmp/log.txt
 
 Set_Exit_Code
 
