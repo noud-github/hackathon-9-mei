@@ -7,20 +7,6 @@ source ./config/jenkins/functions.sh
 
 echo "$PATH"
 
-#which svn
-#svn --version
-
-Install_SVN
-
-which svn
-svn --version
-
-echo "$PATH"
-
-cat /tmp/log.txt
-
-exit 1
-
 Check_Milestone
 
 Go_To_New_Repo_Directory
@@ -71,6 +57,7 @@ git checkout master
 git pull
 git merge --no-ff ${RELEASEBRANCH} -m "Merge branch '${RELEASEBRANCH}'"
 
+Install_SVN
 Set_SVN_to_Silent
 
 grunt deploy:master
