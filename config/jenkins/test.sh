@@ -9,8 +9,8 @@ Check_Milestone
 
 Go_To_New_Repo_Directory
 
-#git clone https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
-git clone https://github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
+git clone https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
+#git clone https://github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
 
 cd ${FOLDER_NAME}
 
