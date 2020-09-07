@@ -18,7 +18,6 @@ node( 'docker-agent' ) {
 						sh 'ls -al /bin'
 						sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
 						sh 'svn --username=Yoast'
-						sh 'bash exit 1'
 						sh 'mkdir ~/.ssh'
 						sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
 						sh 'ls -al config/jenkins/'
