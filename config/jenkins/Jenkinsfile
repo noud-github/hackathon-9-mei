@@ -14,7 +14,7 @@ node( 'docker-agent' ) {
 					def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
 					ubuntu.pull()
 					ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
-						sh 'ln -s ./config/tools/svn.py /bin/svn'
+						sh 'ln -s  config/tools/svn.py /bin/svn'
 						sh 'ls -al /bin'
 						sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
 						sh 'svn --username=Yoast'
