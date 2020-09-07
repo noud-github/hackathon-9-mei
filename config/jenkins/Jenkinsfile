@@ -3,6 +3,7 @@ properties([
     string(name: 'YOAST_TAG', defaultValue: '15.0', description: 'The target environment', ),
 	string(name: 'MYARG', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
 	string(name: 'README_FILE', defaultValue: 'readme.txt', description: 'The readme file name', )
+	string(name: 'TEST_PASSWD', defaultValue: 'abcdefg', description: 'to test passwd substitution.', )
 	])
 ])
 node( 'docker-agent' ) {
