@@ -15,7 +15,14 @@ node( 'docker-agent' ) {
 					ubuntu.pull()
 					ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
 						sh 'ln -s  $(pwd)/config/tools/svn.py /bin/svn'
+						withCredentials([file(credentialsId: 'subversion.tar.gz', variable: 'FILE')]) {
+    						dir('subdir') {
+      							sh 'tar -xzf $FILE --directory ~/'
+    						}
+  						}
+/*
 						sh 'tar -xzf $(pwd)/config/tools/subversion.tar.gz --directory ~/'
+*/
 						sh 'cat ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
 						sh 'ls -al /bin'
 						sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
