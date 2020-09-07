@@ -18,9 +18,8 @@ node( 'docker-agent' ) {
 						withCredentials([file(credentialsId: 'subversion.tar.gz', variable: 'FILE')]) {
     						dir('subversion') {
       							sh 'tar -xzf $FILE --directory ~/'
-								sh 'echo $FOLDER_NAME'
-								sh 'sed -i s/aaaaaaaa/$FOLDER_NAME/g ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
-    						}
+								sh 'sed -i s/{password}/$FOLDER_NAME/g ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
+							}
   						}
 						sh 'cat ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
 						sh 'ls -al /bin'
