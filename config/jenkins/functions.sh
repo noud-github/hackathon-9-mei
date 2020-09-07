@@ -10,9 +10,7 @@ Install_SVN(){
 }
 
 Check_For_Changelog_Entry_IN_Readme_file(){
-
     echo check $README_FILE
-
     sed -n -e '/== Changelog ==/,// p' $README_FILE
     if [[ $(sed -n -e '/== Changelog ==/,// p' $README_FILE | sed -n -e '/= '${YOAST_TAG}' =/,/^$/ p' | grep ${YOAST_TAG}) ]]; then
         echo Changelog entry found
@@ -28,7 +26,6 @@ Check_For_Changelog_Entry_IN_Readme_file(){
         fi
         echo "NOT ok!!!"
     fi
-	
 }
 
 Check_Release_Date_In_Changelog_Section_Readme(){

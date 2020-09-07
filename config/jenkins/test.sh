@@ -5,17 +5,12 @@ source ./config/jenkins/functions.sh
 ####screen -r
 #ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
 
-which svn
-svn --version
+# install svn config
 
-Install_SVN
 
-which svn
-svn --version
 
-cat /tmp/log.txt
 
-exit 1
+exit 0
 
 Check_Milestone
 
