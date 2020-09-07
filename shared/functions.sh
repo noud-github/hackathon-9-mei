@@ -4,13 +4,15 @@ Go_To_New_Repo_Directory(){
     cd "$REPOBASE"
 }
 
-Get_Release_X.XX ()
+SET_Release_Branch ()
 {
     # pick the lowest release branch
     if [[ "$HOTFIX" = "true" ]]; then
-        git branch -a | grep 'hotfix/[1-9]' | cut -d / -f 4 | sort -V | head -n 1 
+        YOAST_TAG=$(git branch -a | grep 'hotfix/[1-9]' | cut -d / -f 4 | sort -V | head -n 1 )
+		RELEASEBRANCH='hotfix/'${YOAST_TAG}
     else
-        git branch -a | grep 'release/[1-9]' | cut -d / -f 4 | sort -V | head -n 1 
+        YOAST_TAG=$(git branch -a | grep 'release/[1-9]' | cut -d / -f 4 | sort -V | head -n 1 )
+		RELEASEBRANCH='release/'${YOAST_TAG}
     fi
 
 }

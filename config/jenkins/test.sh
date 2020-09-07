@@ -15,7 +15,9 @@ git clone https://github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
 
 cd ${FOLDER_NAME}
 
-echo "guess the number: "$(Get_Release_X.XX)
+SET_Release_Branch
+
+echo "release: $YOAST_TAG"
 
 git checkout $RELEASEBRANCH
 

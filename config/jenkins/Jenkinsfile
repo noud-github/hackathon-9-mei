@@ -1,6 +1,5 @@
 properties([
   parameters([
-    string(name: 'YOAST_TAG', defaultValue: '15.0', description: 'The target environment', ),
 	string(name: 'MYARG', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
 	])
 ])
