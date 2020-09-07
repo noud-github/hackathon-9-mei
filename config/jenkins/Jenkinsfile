@@ -24,7 +24,6 @@ node( 'docker-agent' ) {
 								}
 							}
   						}
-						sh 'sleep 1000'
 						sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
 						sh 'mkdir ~/.ssh'
 						sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
@@ -34,7 +33,7 @@ node( 'docker-agent' ) {
 								sh 'bash config/jenkins/test.sh $MYARG'
 							}
 						}
-						
+						sh 'rm ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
 					}
 				}
 			}
