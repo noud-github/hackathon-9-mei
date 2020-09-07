@@ -2,41 +2,41 @@ properties([
   parameters([
     string(name: 'YOAST_TAG', defaultValue: '15.0', description: 'The target environment', ),
 	string(name: 'MYARG', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
-	string(name: 'README_FILE', defaultValue: 'readme.txt', description: 'The readme file name', )
-	
 	])
 ])
 node( 'docker-agent' ) {
-	withCredentials([string(credentialsId: 'GITHUB_ACCESS_TOKEN', variable: 'GITHUB_ACCESS_TOKEN')]){
-		withEnv(['ChanglogPostid=1292114','FOLDER_NAME=wordpress-seo']){
-			checkout scm
-			docker.withServer( 'tcp://172.17.0.1:2375' ) {
-				stage('build') {
-					def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
-					ubuntu.pull()
-					ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
-						sh 'ln -s  $(pwd)/config/tools/svn.py /bin/svn'
-						withCredentials([file(credentialsId: 'subversion.tar.gz', variable: 'FILE')]) {
-							withCredentials([string(credentialsId: 'SUBVERSION_TOKEN', variable: 'SUBVERSION_TOKEN')]){
-								dir('subversion') {
-									sh 'tar -xzf $FILE --directory ~/'
-									sh 'sed -i s/{password}/$SUBVERSION_TOKEN/g ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
-								}
+	withEnv(['ChanglogPostid=1292114','FOLDER_NAME=wordpress-seo','README_FILE=readme.txt','GITHUBACOUNT=Yoast']){
+		checkout scm
+		docker.withServer( 'tcp://172.17.0.1:2375' ) {
+			stage('build') {
+				def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
+				ubuntu.pull()
+				ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
+					sh 'ln -s  $(pwd)/config/tools/svn.py /bin/svn'
+					withCredentials([file(credentialsId: 'subversion.tar.gz', variable: 'SUBVERSION_FILE')]) {
+						withCredentials([string(credentialsId: 'SUBVERSION_TOKEN', variable: 'SUBVERSION_TOKEN')]){
+							dir('subversion') {
+								sh 'tar -xzf $SUBVERSION_FILE --directory ~/'
+								sh 'sed -i s/{password}/$SUBVERSION_TOKEN/g ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
 							}
-  						}
-						sh 'echo "SC_ATTR is set to  ${SC_ATTR} " '
-						sh 'mkdir ~/.ssh'
-						sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
-						sh 'ls -al config/jenkins/'
+						}
+					}
+					withCredentials([file(credentialsId: 'ssh.tar.gz', variable: 'SSH_FILE')]) {
+						sh 'tar -xzf $SSH_FILE --directory ~/'
+					}
+					sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
+					sh 'ls -al config/jenkins/'
+					withCredentials([string(credentialsId: 'GITHUB_ACCESS_TOKEN', variable: 'GITHUB_ACCESS_TOKEN')]){
 						catchError {
 							sshagent (credentials: ['Jenkins-CII']) {
 								sh 'bash config/jenkins/test.sh $MYARG'
 							}
 						}
-						sh 'rm ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
 					}
+					sh 'rm -rf ~/.subversion'
 				}
 			}
 		}
+		
 	}
 }

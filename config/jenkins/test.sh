@@ -3,7 +3,8 @@ source ./shared/functions.sh
 source ./config/jenkins/functions.sh
 
 ####screen -r
-#ssh -o StrictHostKeyChecking=no -l pi 10.0.10.10 uname -a
+
+ssh -o StrictHostKeyChecking=no staging uname -a
 
 Check_Milestone
 
@@ -42,6 +43,8 @@ git add package.json
 git status
 
 git commit -m "Bump version to ${YOAST_TAG}"
+
+exit
 
 # if more files changed than giit add than bail out'
 grunt ensure-clean-branch
