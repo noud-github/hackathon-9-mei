@@ -34,7 +34,7 @@ else
     if [[ "$PRE" = "true" ]]; then
         echo "PRE!!!"
     else
-        echo "TEST!!!"
+        echo "DEBUG!!!"
         set -x
     fi
 fi
