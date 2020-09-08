@@ -6,7 +6,7 @@ Go_To_New_Repo_Directory(){
 
 SET_Release_Branch ()
 {
-	if [["$OVERRIDE_YOAST_TAG" = ""]]; then
+	if [[ "$OVERRIDE_YOAST_TAG" = "" ]]; then
 		# pick the lowest release branch
 		if [[ "$HOTFIX" = "true" ]]; then
 			YOAST_TAG=$(git branch -a | grep 'hotfix/[1-9]' | cut -d / -f 4 | sort -V | head -n 1 )
@@ -253,7 +253,7 @@ Set_Exit_Code(){
 		echo -e "Summery why it did not pass tests:$EXIT_MESSAGE"
 		exit 1
 	else
-		if [[ "$EXIT_MESSAGE" != "" ]] then
+		if ! (( "$EXIT_MESSAGE" != "" )) ; then
 			echo -e "Warning: $EXIT_MESSAGE"
 		fi
 	fi
