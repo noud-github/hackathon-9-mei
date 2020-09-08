@@ -57,7 +57,7 @@ git pull
 git merge --no-ff ${RELEASEBRANCH} -m "Merge branch '${RELEASEBRANCH}'"
 
 #Install_SVN
-#Set_SVN_to_Silent
+Set_SVN_to_Silent
 
 grunt deploy:master
 
