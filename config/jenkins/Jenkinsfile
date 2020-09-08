@@ -1,6 +1,8 @@
 properties([
   parameters([
 	string(name: 'MYARG', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
+	string(name: 'TYPE', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', )
+	choice(name: 'CHOICES', choices: ['one', 'two', 'three'], description: ''),
 	])
 ])
 node( 'docker-agent' ) {
@@ -11,6 +13,7 @@ node( 'docker-agent' ) {
 				def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
 				ubuntu.pull()
 				ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
+					echo "Choice: ${params.CHOICE}"
 					sh 'ln -s  $(pwd)/config/tools/svn.py /bin/svn'
 					withCredentials([file(credentialsId: 'subversion.tar.gz', variable: 'SUBVERSION_FILE')]) {
 						withCredentials([string(credentialsId: 'SUBVERSION_TOKEN', variable: 'SUBVERSION_TOKEN')]){

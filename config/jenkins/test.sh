@@ -6,7 +6,7 @@ source ./config/jenkins/functions.sh
 
 echo "Choice: ${params.CHOICE}"
 
-exit
+Set_Exit_Code
 
 Go_To_New_Repo_Directory
 
