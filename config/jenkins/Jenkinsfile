@@ -24,7 +24,6 @@ node( 'docker-agent' ) {
 						sh 'tar -xzf $SSH_FILE --directory ~/'
 					}
 					sh 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
-					sh 'ls -al config/jenkins/'
 					withCredentials([string(credentialsId: 'GITHUB_ACCESS_TOKEN', variable: 'GITHUB_ACCESS_TOKEN')]){
 						catchError {
 							sshagent (credentials: ['Jenkins-CII']) {

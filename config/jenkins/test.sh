@@ -4,6 +4,10 @@ source ./config/jenkins/functions.sh
 
 ####screen -r
 
+echo "Choice: ${params.CHOICE}"
+
+exit
+
 Go_To_New_Repo_Directory
 
 git clone https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git

@@ -222,23 +222,14 @@ Update_Product_Post(){
 
 
 markdown2html(){
-
     # remove trailing spaces
     RELEASE_MD=$(echo "$RELEASE_MD" | sed -e 's/[[:space:]]*$//g')
-
     local MY_RESULT=$(curl -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" --data-urlencode "Submit=Format" --data-urlencode "changelog=$RELEASE_MD"  https://yoast.com/internal-tools/format-changelog.php)
-    
-
     local line=`echo "$MY_RESULT" | grep -n '<h2>Result:</h2>'   | sed -n 1,2p | cut -d : -f 1`
-
     RELEASE_HTML=$(echo "$MY_RESULT" | sed -n $line,'$'p )
-
     local lines=`echo "$RELEASE_HTML" | grep -n  'textarea' | sed -n 1,2p | cut -d : -f 1`
     local range=`echo "${lines}" | head -n 1`","$(( `echo "${lines}" | tail -n 1` ))"p"
-
     RELEASE_HTML=$(echo "$RELEASE_HTML" | sed -n "${range}" | sed -e 's/[[:space:]]*<textarea name="result" cols="100" rows="30">//'  -e 's/<\/textarea>.*//'  -e 's/<p>//g' -e 's/<\/p>/\'$'\n/g' | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n<\/li>/<\/li>/g' -e 's/\n<li>/\'$'\n \t<li>/g' -e 's/\n\n*<ul>/\'$'\n<ul>/g' -e 's/<\/ul>\n\n*/<\/ul>\'$'\n/g' -e 's/[[:space:]][[:space:]]*<\/li>\n/\<\/li>\'$'\n/g'  -e 's/<\/ul><\/li>/<\/ul>\'$'\n<\/li>/g'   -e 's/<\/small>\n\([a-zA-Z0-9]\)/<\/small>\'$'\n\\\n\\1/g'  -e 's/\&quot\;/"/g')
-
-
 }
 
 Update_Yoastdotcom_Changelog_Post(){
