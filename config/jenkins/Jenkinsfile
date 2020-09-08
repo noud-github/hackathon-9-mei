@@ -1,6 +1,6 @@
 properties([
   parameters([
-	choice(name: 'MYARG', choices: ['pre', 'debug', 'live'], 'mode to run in debug pre live ', ),
+	choice(name: 'MYARG', choices: ['pre', 'debug', 'live'], description: 'mode to run in debug pre live ' ),
     choice(name: 'MYTYPE', choices: ['release', 'hotfix'], description: 'is this a normal release our a hotfix')
 	])
 ])
