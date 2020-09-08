@@ -12,7 +12,6 @@ node( 'docker-agent' ) {
 				def ubuntu = docker.image( 'yoastseo/docker-php-composer-node' )
 				ubuntu.pull()
 				ubuntu.inside( '-e SC_ATTR="yoast-seo"  ' ) { 
-					sh 'echo "Choice: $CHOICES"'
 					sh 'ln -s  $(pwd)/config/tools/svn.py /bin/svn'
 					withCredentials([file(credentialsId: 'subversion.tar.gz', variable: 'SUBVERSION_FILE')]) {
 						withCredentials([string(credentialsId: 'SUBVERSION_TOKEN', variable: 'SUBVERSION_TOKEN')]){
