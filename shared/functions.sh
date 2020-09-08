@@ -252,5 +252,10 @@ Set_Exit_Code(){
 	if [[ "$TASK_RESULT" = ""FAILURE"" ]]; then
 		echo -e "Summery why it did not pass tests:$EXIT_MESSAGE"
 		exit 1
+	else
+		if [[ "$EXIT_MESSAGE" != "" ]] then
+			echo -e "Warning: $EXIT_MESSAGE"
+		fi
 	fi
+
 }

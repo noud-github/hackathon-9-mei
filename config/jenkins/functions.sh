@@ -49,8 +49,8 @@ Check_Release_Date_In_Changelog_Section_Readme(){
                 #todo: slack message to #channel?
                 exit 1
             fi
-			TASK_RESULT="FAILURE"
-			EXIT_MESSAGE="$EXIT_MESSAGE\ndate found in release log is not today"
+			#TASK_RESULT="FAILURE"
+			EXIT_MESSAGE="$EXIT_MESSAGE\nRelease date found in release log is not today"
     fi
 }
 
