@@ -1,8 +1,7 @@
 properties([
   parameters([
-	string(name: 'MYARG', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
-	string(name: 'TYPE', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
-	choice(name: 'CHOICES', choices: ['one', 'two', 'three'], description: '')
+	choice(name: 'MYARG', choices: ['pre', 'debug', 'live'], 'mode to run in debug pre live ', ),
+    choice(name: 'MYTYPE', choices: ['release', 'hotfix'], description: 'is this a normal release our a hotfix')
 	])
 ])
 node( 'docker-agent' ) {
@@ -30,7 +29,7 @@ node( 'docker-agent' ) {
 					withCredentials([string(credentialsId: 'GITHUB_ACCESS_TOKEN', variable: 'GITHUB_ACCESS_TOKEN')]){
 						catchError {
 							sshagent (credentials: ['Jenkins-CII']) {
-								sh 'bash config/jenkins/test.sh $MYARG'
+								sh 'bash config/jenkins/test.sh $MYARG $MYTYPE'
 							}
 						}
 					}
