@@ -88,7 +88,36 @@ else
     git push origin master:CI-test --force --quiet
 fi
 
-cat /tmp/log.txt
+#select release text
+Select_Changlog_From_Readme
+
+#echo "$RELEASE_TXT"
+
+Do_Github_Release
+
+#stop docker
+docker-compose -f $BASEDIR/tools/docker/docker-compose.yml down
+
+#cleanup
+#rm $BASEDIR/$FOLDER_NAME.zip
+
+#todo: check  WordPress.org plugins trac & changelog
+#https://wordpress.org/plugins/wordpress-seo/
+
+#todo: SLACK: #random #yoast_support
+
+#update changelog yoast.com
+Update_Yoastdotcom_SEO_Free_Changelog
+
+#todo: update verion wiki pedia
+
+#todo: update stable version in atlassian
+
+#todo: do a tweet as @YoastDev (sname message as slack message?)
+
+#todo: Close github milestone and delete release/${YOAST_TAG} branch
+
+#next! Premium release
 
 Set_Exit_Code
 

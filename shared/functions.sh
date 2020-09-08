@@ -124,13 +124,10 @@ Do_Github_Release () {
     local API_JSON='{"tag_name": "'${YOAST_TAG}'","target_commitish": "master","name": "'${YOAST_TAG}'","body": "'"${RELEASE_TXT}"'","draft": false,"prerelease": false}'
     local API_URL="https://api.github.com/repos/noud-github/hackathon-9-mei/releases"
     if [[ "$LIVE" = "true" ]]; then
-        echo add release to wordpress SEO premium master
+        echo add release to github
         API_URL="https://api.github.com/repos/${GITHUBACOUNT}/${FOLDER_NAME}/releases"
     else
         echo add release to test
-    fi
-    if [[ "$FOLDER_NAME" = "wordpress-seo"  && "$GITHUBACOUNT" = "noud-github"   ]]; then
-        API_URL="https://api.github.com/repos/noud-github/${FOLDER_NAME}/releases"
     fi
     #echo "$API_JSON"
     #add a release
