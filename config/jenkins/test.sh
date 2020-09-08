@@ -4,7 +4,7 @@ source ./config/jenkins/functions.sh
 
 ####screen -r
 
-echo "Choice: ${CHOICE}"
+echo "Choice: ${CHOICES}"
 
 exit
 
