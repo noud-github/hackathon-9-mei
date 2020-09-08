@@ -1,6 +1,6 @@
 properties([
   parameters([
-	string(name: 'OVERRIDE_YOAST_TAG', defaultValue: '', description: 'If you nedd to set the ${YOAST_TAG} your self default the script should do this oke for you', )
+	string(name: 'OVERRIDE_YOAST_TAG', defaultValue: '', description: 'If you nedd to set the ${YOAST_TAG} your self default the script should do this oke for you', ),
 	choice(name: 'MODE_TO_RUN', choices: ['pre', 'debug', 'live'], description: 'mode to run the scrippt in: debug pre live ' ),
     choice(name: 'TYPE_OF_RELEASE', choices: ['release', 'hotfix'], description: 'Choos is this a normal release our a hotfix')
 	])
