@@ -1,8 +1,8 @@
 properties([
   parameters([
 	string(name: 'MYARG', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
-	string(name: 'TYPE', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', )
-	choice(name: 'CHOICES', choices: ['one', 'two', 'three'], description: ''),
+	string(name: 'TYPE', defaultValue: 'pre', description: 'mode to run in [empty] pre live ', ),
+	choice(name: 'CHOICES', choices: ['one', 'two', 'three'], description: '')
 	])
 ])
 node( 'docker-agent' ) {
