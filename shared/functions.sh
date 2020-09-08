@@ -16,13 +16,13 @@ SET_Release_Branch ()
 			RELEASEBRANCH='release/'${YOAST_TAG}
 		fi
 	else
-	YOAST_TAG=OVERRIDE_YOAST_TAG
-	if [[ "$HOTFIX" = "true" ]]; then
-			RELEASEBRANCH='hotfix/'${YOAST_TAG}
-		else
-			RELEASEBRANCH='release/'${YOAST_TAG}
-		fi
-	fi	
+		YOAST_TAG="$OVERRIDE_YOAST_TAG"
+		if [[ "$HOTFIX" = "true" ]]; then
+				RELEASEBRANCH='hotfix/'${YOAST_TAG}
+			else
+				RELEASEBRANCH='release/'${YOAST_TAG}
+			fi
+		fi	
 }
 
 GET_Monorepro_Highest_Release() {
