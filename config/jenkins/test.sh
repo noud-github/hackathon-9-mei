@@ -4,9 +4,9 @@ source ./config/jenkins/functions.sh
 
 ####screen -r
 
-echo "Choice: ${params.CHOICE}"
+echo "Choice: ${CHOICE}"
 
-Set_Exit_Code
+exit
 
 Go_To_New_Repo_Directory
 
