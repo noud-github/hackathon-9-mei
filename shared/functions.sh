@@ -243,9 +243,9 @@ markdown2html(){
 
 Update_Yoastdotcom_Changelog_Post(){
 
-    scp $BASEDIR/new_changelog.html $SSH_HOST:~/dump/$ChanglogPostid.new_changelog.html
-    ssh $SSH_HOST  'cd '$WP_FILES' && wp post update '$ChanglogPostid' ~/dump/'$ChanglogPostid'.new_changelog.html'
-    ssh $SSH_HOST  -t 'rm ~/dump/'$ChanglogPostid'.new_changelog.html'  
+    scp -o stricthostkeychecking=no $BASEDIR/new_changelog.html $SSH_HOST:~/dump/$ChanglogPostid.new_changelog.html
+    ssh -o stricthostkeychecking=no $SSH_HOST  'cd '$WP_FILES' && wp post update '$ChanglogPostid' ~/dump/'$ChanglogPostid'.new_changelog.html'
+    ssh -o stricthostkeychecking=no $SSH_HOST  -t 'rm ~/dump/'$ChanglogPostid'.new_changelog.html'  
 
 }
 

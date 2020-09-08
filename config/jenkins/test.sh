@@ -6,8 +6,8 @@ source ./config/jenkins/functions.sh
 
 Go_To_New_Repo_Directory
 
-#git clone https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
-git clone https://github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
+git clone https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
+#git clone https://github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
 
 cd ${FOLDER_NAME}
 
@@ -56,7 +56,7 @@ git checkout master
 git pull
 git merge --no-ff ${RELEASEBRANCH} -m "Merge branch '${RELEASEBRANCH}'"
 
-#Install_SVN
+Install_SVN
 Set_SVN_to_Silent
 
 grunt deploy:master
@@ -91,9 +91,6 @@ Select_Changlog_From_Readme
 #echo "$RELEASE_TXT"
 
 Do_Github_Release
-
-#stop docker
-docker-compose -f $BASEDIR/tools/docker/docker-compose.yml down
 
 #cleanup
 #rm $BASEDIR/$FOLDER_NAME.zip

@@ -131,7 +131,7 @@ Update_Yoastdotcom_SEO_Free_Changelog () {
 
     #echo "$RELEASE_HTML" 
 
-    ssh $SSH_HOST  'cd '$WP_FILES' && wp post get '$ChanglogPostid' --field=content' > $BASEDIR/changelog.html
+    ssh -o stricthostkeychecking=no $SSH_HOST  'cd '$WP_FILES' && wp post get '$ChanglogPostid' --field=content' > $BASEDIR/changelog.html
 
     #find line of previus release header
     line=$(sed -n -e '1,/^</ p' $BASEDIR/changelog.html | grep -n '^<h2.*</h2>' | cut -d : -f 1)
