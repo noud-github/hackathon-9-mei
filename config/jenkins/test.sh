@@ -44,8 +44,6 @@ git status
 
 git commit -m "Bump version to ${YOAST_TAG}"
 
-exit
-
 # if more files changed than giit add than bail out'
 grunt ensure-clean-branch
 
@@ -57,7 +55,6 @@ fi
 git checkout master
 git pull
 git merge --no-ff ${RELEASEBRANCH} -m "Merge branch '${RELEASEBRANCH}'"
-
 
 #Install_SVN
 #Set_SVN_to_Silent
