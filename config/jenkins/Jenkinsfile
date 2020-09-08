@@ -1,7 +1,7 @@
 properties([
   parameters([
-	choice(name: 'MYARG', choices: ['pre', 'debug', 'live'], description: 'mode to run in debug pre live ' ),
-    choice(name: 'MYTYPE', choices: ['release', 'hotfix'], description: 'is this a normal release our a hotfix')
+	choice(name: 'MODE_TO_RUN', choices: ['pre', 'debug', 'live'], description: 'mode to run the scrippt in: debug pre live ' ),
+    choice(name: 'TYPE_OF_RELEASE', choices: ['release', 'hotfix'], description: 'Choos is this a normal release our a hotfix')
 	])
 ])
 node( 'docker-agent' ) {
@@ -28,7 +28,7 @@ node( 'docker-agent' ) {
 					withCredentials([string(credentialsId: 'GITHUB_ACCESS_TOKEN', variable: 'GITHUB_ACCESS_TOKEN')]){
 						catchError {
 							sshagent (credentials: ['Jenkins-CII']) {
-								sh 'bash config/jenkins/test.sh $MYARG $MYTYPE'
+								sh 'bash config/jenkins/test.sh $MODE_TO_RUN $TYPE_OF_RELEASE'
 							}
 						}
 					}
