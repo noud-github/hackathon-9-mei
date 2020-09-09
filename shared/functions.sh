@@ -72,7 +72,6 @@ Check_Package_Versions () {
                 if [[ "$REPRO" = "@yoast/grunt-plugin-tasks" ]]; then
                     echo "ignoring this for repo: $REPRO" 
                 else
-                    # slack message to #channel?
                     exit 1
                 fi
             fi
@@ -80,9 +79,7 @@ Check_Package_Versions () {
                 if [[ "$REPRO" = "@yoast/grunt-plugin-tasks" ]]; then
                     echo "ignoring this for repo: $REPRO"
                 else
-                    # slack message to #channel?
                     PressEnter=true
-                    #exit 1
                 fi
             fi
         fi
@@ -101,7 +98,6 @@ Check_Milestone () {
         if [[ "$OPENISSUES" != "0" ]]; then
             echo "There are $OPENISSUES open issues in the milestone!!!"
             if [[ "$LIVE" = "true" ]]; then
-                #todo: slack message to #channel?
                 exit 1                
             fi
             if [[ "$PRE" = "true" ]]; then
@@ -110,9 +106,8 @@ Check_Milestone () {
             fi 
         fi
     else
-         echo "There is no milestone!!!"
+        echo "There is no milestone!!!"
         if [[ "$LIVE" = "true" ]]; then
-            #todo: slack message to #channel?
             if [[ "$HOTFIX" = "true" ]]; then
                     echo "this is a hotfix"
                 else
@@ -161,27 +156,26 @@ Do_Github_Release () {
 }
 
 Do_We_Need_Commit() {
-[[ $(git status | grep "nothing to commit, working tree clean") = "nothing to commit, working tree clean" ]] && echo false || echo true
+	[[ $(git status | grep "nothing to commit, working tree clean") = "nothing to commit, working tree clean" ]] && echo false || echo true
 }
 
 Upload_Zip_To_Yoast(){
-
-if [[ `ssh $SSH_HOST  [ -f "'$WP_FILES'/app/uploads/"$(date +"%Y")"/"$(date +"%m")"/wordpress-seo-premium-$YOAST_TAG.zip" ] && echo "exist"` = "exist" ]]; then
-    echo "already uploaded"
-    if [[ "$LIVE" = "true" ]]; then
-        exit 1
-    fi
-else
-    # add file to media
-    scp  $BASEDIR/$FOLDER_NAME-$YOAST_TAG.zip  $SSH_HOST:~/dump
-    ssh $SSH_HOST  'cd '$WP_FILES' && wp media import ~/dump/wordpress-seo-premium-'$YOAST_TAG'.zip --porcelain | xargs -I {} wp post update {} --post_author=388975'
-    ssh $SSH_HOST 'rm ~/dump/'$FOLDER_NAME-$YOAST_TAG.zip
-    if [[ `ssh $SSH_HOST  [ -f "'$WP_FILES'/app/uploads/"$(date +"%Y")"/"$(date +"%m")"/wordpress-seo-premium-$YOAST_TAG.zip" ] && echo "exist"` = "exist" ]]; then
-        echo upload succes!!
-    else 
-        exit 1
-    fi
-fi
+	if [[ `ssh $SSH_HOST  [ -f "'$WP_FILES'/app/uploads/"$(date +"%Y")"/"$(date +"%m")"/wordpress-seo-premium-$YOAST_TAG.zip" ] && echo "exist"` = "exist" ]]; then
+		echo "already uploaded"
+		if [[ "$LIVE" = "true" ]]; then
+			exit 1
+		fi
+	else
+		# add file to media on yoast.com
+		scp  $BASEDIR/$FOLDER_NAME-$YOAST_TAG.zip  $SSH_HOST:~/dump
+		ssh $SSH_HOST  'cd '$WP_FILES' && wp media import ~/dump/wordpress-seo-premium-'$YOAST_TAG'.zip --porcelain | xargs -I {} wp post update {} --post_author=388975'
+		ssh $SSH_HOST 'rm ~/dump/'$FOLDER_NAME-$YOAST_TAG.zip
+		if [[ `ssh $SSH_HOST  [ -f "'$WP_FILES'/app/uploads/"$(date +"%Y")"/"$(date +"%m")"/wordpress-seo-premium-$YOAST_TAG.zip" ] && echo "exist"` = "exist" ]]; then
+			echo upload succes!!
+		else 
+			exit 1
+		fi
+	fi
 }
 
 Calc_md5 (){
@@ -214,22 +208,7 @@ Update_Product_Post(){
 
 }
 
-# Check_If_More_Files_Changed_Than_Expected(){
-#     if [[ $(git status  --porcelain) ]]; then
-#         echo more files changed than expected
-#         git status
-#         if [[ "$LIVE" = "true" ]]; then
-#             #todo: slack message to #channel?
-#             exit 1
-#         fi
-#         if [[ "$PRE" = "true" ]]; then
-#             read -p "Press enter to continue"
-#         fi
-#     fi
-# }
-
-
-markdown2html(){
+Markdown_2_Html(){
     # remove trailing spaces
     RELEASE_MD=$(echo "$RELEASE_MD" | sed -e 's/[[:space:]]*$//g')
     local MY_RESULT=$(curl -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" --data-urlencode "Submit=Format" --data-urlencode "changelog=$RELEASE_MD"  https://yoast.com/internal-tools/format-changelog.php)
@@ -241,11 +220,9 @@ markdown2html(){
 }
 
 Update_Yoastdotcom_Changelog_Post(){
-
     scp -o stricthostkeychecking=no $BASEDIR/new_changelog.html $SSH_HOST:~/dump/$ChanglogPostid.new_changelog.html
     ssh -o stricthostkeychecking=no $SSH_HOST  'cd '$WP_FILES' && wp post update '$ChanglogPostid' ~/dump/'$ChanglogPostid'.new_changelog.html'
     ssh -o stricthostkeychecking=no $SSH_HOST  'rm ~/dump/'$ChanglogPostid'.new_changelog.html'  
-
 }
 
 Set_Exit_Code(){
@@ -257,5 +234,4 @@ Set_Exit_Code(){
 			echo -e "Warning: $EXIT_MESSAGE"
 		fi
 	fi
-
 }

@@ -3,7 +3,6 @@ PRE="false"
 HOTFIX="false"
 BASEDIR=$(pwd)
 REPOBASE=$BASEDIR/.repos
-#RELEASEBRANCH='release/'${YOAST_TAG}
 WP_FILES="/home/staging-yoast/staging.yoast.com/web"
 SSH_HOST="staging"
 SITE_URL="staging.yoast.com"
@@ -20,8 +19,7 @@ EXIT_MESSAGE=""
 if [[ "$HOTFIX" = "true" ]]; then
     echo "HOTFIX= "$HOTFIX 
     echo "using hotfix/XX.X instead of release/X.XX"
-    echo "and no hard error on missing milestone" 
-    #RELEASEBRANCH='hotfix/'${YOAST_TAG}
+    echo "no hard error on missing milestone evert" 
 fi
 
 if [[ "$LIVE" = "true" ]]; then

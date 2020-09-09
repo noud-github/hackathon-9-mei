@@ -12,12 +12,11 @@ Install_SVN(){
 Check_For_Changelog_Entry_IN_Readme_file(){
     echo check $README_FILE
     sed -n -e '/== Changelog ==/,// p' $README_FILE
-    if [[ $(sed -n -e '/== Changelog ==/,// p' $README_FILE | sed -n -e '/= '${YOAST_TAG}' =/,/^$/ p' | grep ${YOAST_TAG}) ]]; then
+    if [[ $(sed -n -e '/== Changelog ==/,// p' $README_FILE | sed -n -e '/= '${YOAST_TAG}' =/,/^$/ p' | grep -e '^= '$YOAST_TAG' =$') ]]; then
         echo Changelog entry found
     else
         echo did not find Changlog entry
         if [[ "$LIVE" = "true" ]]; then
-            #todo: slack message to #channel?
             exit 1
         fi
         if [[ "$PRE" = "true" ]]; then
@@ -46,7 +45,6 @@ Check_Release_Date_In_Changelog_Section_Readme(){
     else
             echo  "Not OK date found is not today"
             if [[ "$LIVE" = "true" ]]; then
-                #todo: slack message to #channel?
                 exit 1
             fi
 			#TASK_RESULT="FAILURE"
@@ -59,7 +57,6 @@ Check_For_Blank_Lines_After_Header_In_Changelog_Section_Readme(){
     if [[ $(sed -n -e '/== Changelog ==/,// p' $README_FILE  |  sed 's/[[:space:]]*$//g' | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/\\n/g' |  grep '\\n[a-zA-Z0-9]*:\\\n\* ') ]]; then
     echo "found missing NEWLINE after header in ${README_FILE}"
     if [[ "$LIVE" = "true" ]]; then
-            #todo: slack message to #channel?
             exit 1
         fi
         if [[ "$PRE" = "true" ]]; then
@@ -77,9 +74,7 @@ Set_SVN_to_Silent(){
     # force_interactive: false,
     # not very pritty but it does the job:
     sed -i'' -e 's/deploy_trunk: true,/deploy_trunk: true,skip_confirmation: true,svn_user: "Yoast",/g' $REPOBASE/$FOLDER_NAME/node_modules/@yoast/grunt-plugin-tasks/config/wp_deploy.js
-    #read -p "Press enter to continue"
 }
-
 
 Select_Changlog_From_Readme(){
     lines=`sed -n -e '/^== Changelog ==/,// p' $README_FILE | grep -n '^= [0-9]' | sed -n 1,2p | cut -d : -f 1`
@@ -90,7 +85,6 @@ Select_Changlog_From_Readme(){
     if [[ "$RELEASE_TXT" = "" ]]; then
     echo release text not found!!!
     if [[ "$LIVE" = "true" ]]; then
-            #todo: slack message to #channel?
             exit 1
         fi
         if [[ "$PRE" = "true" ]]; then
@@ -103,7 +97,6 @@ Select_Changlog_From_Readme(){
 	if [[ "$foundtag" = "" ]]; then
     	echo "missing = $YOAST_TAG = line in release log this will break release post on Wordpress.com!!"
     if [[ "$LIVE" = "true" ]]; then
-            #todo: slack message to #channel?
             exit 1
         fi
         if [[ "$PRE" = "true" ]]; then
@@ -124,7 +117,7 @@ Update_Yoastdotcom_SEO_Free_Changelog () {
     exit 1
     fi
 
-    markdown2html 
+    Markdown_2_Html 
 
     RELEASE_HTML=$(echo "$RELEASE_HTML" | sed -e 's/<h2>\(.*\)<\/h2./<h2 class="\1">\1<\/h2>/g' )      
 

@@ -1,8 +1,8 @@
 properties([
   parameters([
 	string(name: 'OVERRIDE_YOAST_TAG', defaultValue: '', description: 'Only use this if you need to set the ${YOAST_TAG} your self by default the script should do this oke for you', ),
-	choice(name: 'MODE_TO_RUN', choices: ['pre', 'debug', 'live'], description: 'mode to run the scrippt in: debug pre live ' ),
-    choice(name: 'TYPE_OF_RELEASE', choices: ['release', 'hotfix'], description: 'Choos is this a normal release our a hotfix')
+	choice(name: 'MODE_TO_RUN', choices: ['pre', 'debug', 'live'], description: 'mode to run the script, pre: test to see if deploy steps have no errors, Live: do the real thing, debug: same as pre but with a lot of logging' ),
+    choice(name: 'TYPE_OF_RELEASE', choices: ['release', 'hotfix'], description: 'Choose if this a normal type of release or a hotfix')
 	])
 ])
 node( 'docker-agent' ) {
@@ -16,10 +16,8 @@ node( 'docker-agent' ) {
 					sh 'ln -s  $(pwd)/config/tools/svn.py /bin/svn'
 					withCredentials([file(credentialsId: 'subversion.tar.gz', variable: 'SUBVERSION_FILE')]) {
 						withCredentials([string(credentialsId: 'SUBVERSION_TOKEN', variable: 'SUBVERSION_TOKEN')]){
-							dir('subversion') {
-								sh 'tar -xzf $SUBVERSION_FILE --directory ~/'
-								sh 'sed -i s/{password}/$SUBVERSION_TOKEN/g ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
-							}
+							sh 'tar -xzf $SUBVERSION_FILE --directory ~/'
+							sh 'sed -i s/{password}/$SUBVERSION_TOKEN/g ~/.subversion/auth/svn.simple/d016e6fd1f81b6fef3e2e8648f38430d'
 						}
 					}
 					withCredentials([file(credentialsId: 'ssh.tar.gz', variable: 'SSH_FILE')]) {

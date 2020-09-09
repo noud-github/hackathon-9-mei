@@ -7,7 +7,6 @@ source ./config/jenkins/functions.sh
 Go_To_New_Repo_Directory
 
 git clone https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
-#git clone https://github.com/${GITHUBACOUNT}/${FOLDER_NAME}.git
 
 cd ${FOLDER_NAME}
 
@@ -15,23 +14,22 @@ SET_Release_Branch
 
 echo "release: $YOAST_TAG"
 
-exit
-
 Check_Milestone
 
 git checkout $RELEASEBRANCH
 
 git merge origin/master
 
-#check verions (bailout on unexpected versions)
+#check verions in package.json (bailout on unexpected versions)
 Check_Package_Versions
 
 #Remove the artifact folder if present
 rm -rf  artifact
 
+#install packeges
 yarn
 
-#Update version
+#Update version to the release version
 grunt set-version --new-version=${YOAST_TAG}
 
 Check_For_Changelog_Entry_IN_Readme_file
