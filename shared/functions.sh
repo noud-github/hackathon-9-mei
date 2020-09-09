@@ -110,6 +110,7 @@ Check_Milestone () {
         if [[ "$LIVE" = "true" ]]; then
             if [[ "$HOTFIX" = "true" ]]; then
                     echo "this is a hotfix"
+					EXIT_MESSAGE="$EXIT_MESSAGE\nThere is no $YOAST_TAG milestone!!!"
                 else
                     exit 1
             fi     

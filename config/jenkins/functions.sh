@@ -10,7 +10,7 @@ Install_SVN(){
 }
 
 Check_For_Changelog_Entry_IN_Readme_file(){
-    echo check $README_FILE
+    echo check $README_FILE for change log entry
     sed -n -e '/== Changelog ==/,// p' $README_FILE
     if [[ $(sed -n -e '/== Changelog ==/,// p' $README_FILE | sed -n -e '/= '${YOAST_TAG}' =/,/^$/ p' | grep -e '^= '$YOAST_TAG' =$') ]]; then
         echo Changelog entry found
@@ -46,6 +46,9 @@ Check_Release_Date_In_Changelog_Section_Readme(){
             echo  "Not OK date found is not today"
             if [[ "$LIVE" = "true" ]]; then
                 exit 1
+            fi
+			if [[ "$PRE" = "true" ]]; then
+                EXIT_MESSAGE="$EXIT_MESSAGE\nThe next warning is probaly by design as this was a test run.\ndate in readme: $FOUNDRELEASEDATE"
             fi
 			#TASK_RESULT="FAILURE"
 			EXIT_MESSAGE="$EXIT_MESSAGE\nRelease date found in release log is not today"
