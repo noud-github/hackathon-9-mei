@@ -65,7 +65,7 @@ Check_Package_Versions () {
         if [[ "$RELESEDVERSION" = "$VERSION" ]]; then
             echo "ok"
         else
-            message="$message\n $REPRO is set to wrong version $VERSION in package.json expected version: $RELESEDVERSION" 
+            message="$message\n$REPRO is set to wrong version $VERSION in package.json expected version: $RELESEDVERSION" 
 			#echo "message: $message"
 			echo $REPRO "is set to wrong version" $VERSION "in package.json expected version:" $RELESEDVERSION 
             if [[ "$LIVE" = "true" ]]; then
@@ -102,7 +102,7 @@ Check_Milestone () {
             fi
             if [[ "$PRE" = "true" ]]; then
                 TASK_RESULT="FAILURE"
-                EXIT_MESSAGE="$EXIT_MESSAGE\nThere are $OPENISSUES open issues in the milestone!!!"
+                EXIT_MESSAGE="$EXIT_MESSAGE\nThere are $OPENISSUES open issues in the $YOAST_TAG milestone!!!"
             fi 
         fi
     else
